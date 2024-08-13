@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { navItems } from "./nav-items";
 import { ErrorBoundary } from 'react-error-boundary';
+import { navItems } from "./nav-items";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,9 +16,9 @@ const queryClient = new QueryClient({
 });
 
 const ErrorFallback = ({ error }) => (
-  <div role="alert">
-    <p>Something went wrong:</p>
-    <pre>{error.message}</pre>
+  <div role="alert" className="p-4 bg-red-100 border border-red-400 text-red-700">
+    <p className="font-bold">Something went wrong:</p>
+    <pre className="mt-2 text-sm">{error.message}</pre>
   </div>
 );
 

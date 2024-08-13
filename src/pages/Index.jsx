@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import TweetInput from '../components/TweetInput';
 import TweetPreview from '../components/TweetPreview';
 import { toast } from "@/components/ui/use-toast";
-import { ErrorBoundary } from 'react-error-boundary';
 
 const ErrorFallback = ({ error }) => (
-  <div role="alert">
-    <p>Something went wrong:</p>
-    <pre>{error.message}</pre>
+  <div role="alert" className="p-4 bg-red-100 border border-red-400 text-red-700">
+    <p className="font-bold">Something went wrong:</p>
+    <pre className="mt-2 text-sm">{error.message}</pre>
   </div>
 );
 
