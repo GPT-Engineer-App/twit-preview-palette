@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import TweetInput from '../components/TweetInput';
 import TweetPreview from '../components/TweetPreview';
@@ -14,19 +14,9 @@ const ErrorFallback = ({ error }) => (
 const Index = () => {
   const [tweetContent, setTweetContent] = useState('');
 
-  const handleTweetChange = useCallback(async (newContent) => {
-    try {
-      await new Promise(resolve => setTimeout(resolve, 0)); // Simulate async operation
-      setTweetContent(newContent);
-    } catch (error) {
-      console.error("Error updating tweet content:", error);
-      toast({
-        title: "Error",
-        description: "There was a problem updating the tweet content. Please try again.",
-        variant: "destructive",
-      });
-    }
-  }, []);
+  const handleTweetChange = (newContent) => {
+    setTweetContent(newContent);
+  };
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>

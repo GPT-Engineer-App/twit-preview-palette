@@ -3,12 +3,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 const TweetInput = ({ value, onChange }) => {
-  const handleChange = async (e) => {
-    try {
-      await onChange(e.target.value);
-    } catch (error) {
-      console.error("Error updating tweet content:", error);
-    }
+  const handleChange = (e) => {
+    onChange(e.target.value);
   };
 
   return (
