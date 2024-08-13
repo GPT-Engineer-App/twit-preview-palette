@@ -3,6 +3,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 const TweetInput = ({ value, onChange }) => {
+  const handleChange = (e) => {
+    try {
+      onChange(e.target.value);
+    } catch (error) {
+      console.error("Error updating tweet content:", error);
+    }
+  };
+
   return (
     <div className="space-y-2">
       <Label htmlFor="tweet-content">Tweet Content</Label>
@@ -10,7 +18,7 @@ const TweetInput = ({ value, onChange }) => {
         id="tweet-content"
         placeholder="What's happening?"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleChange}
         className="h-24"
       />
       <p className="text-sm text-gray-500 text-right">

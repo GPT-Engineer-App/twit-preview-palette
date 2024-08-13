@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import TweetInput from '../components/TweetInput';
 import TweetPreview from '../components/TweetPreview';
+import { toast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const [tweetContent, setTweetContent] = useState('');
+
+  const handleTweetChange = useCallback((newContent) => {
+    try {
+      setTweetContent(newContent);
+    } catch (error) {
+      console.error("Error updating tweet content:", error);
+      toast({
+        title: "Error",
+        description: "There was a problem updating the tweet content. Please try again.",
+        variant: "destructive",
+      });
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -12,7 +26,7 @@ const Index = () => {
           Twitter Preview Tool
         </h1>
         <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
-          <TweetInput value={tweetContent} onChange={setTweetContent} />
+          <TweetInput value={tweetContent} onChange={handleTweetChange} />
           <div className="border-t pt-6">
             <h2 className="text-xl font-semibold mb-4">Preview</h2>
             <TweetPreview content={tweetContent} />
