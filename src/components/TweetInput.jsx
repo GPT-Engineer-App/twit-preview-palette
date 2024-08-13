@@ -19,7 +19,8 @@ const TweetInput = ({ value, onChange }) => {
         placeholder="What's happening?"
         value={value}
         onChange={handleChange}
-        className="h-24"
+        className="h-24 break-words"
+        style={{ overflowWrap: 'break-word', wordWrap: 'break-word' }}
       />
       <p className="text-sm text-gray-500 text-right">
         {value.length}/280 characters
