@@ -2,12 +2,21 @@ import React, { useState, useCallback } from 'react';
 import TweetInput from '../components/TweetInput';
 import TweetPreview from '../components/TweetPreview';
 import { toast } from "@/components/ui/use-toast";
+import { ErrorBoundary } from 'react-error-boundary';
+
+const ErrorFallback = ({ error }) => (
+  <div role="alert">
+    <p>Something went wrong:</p>
+    <pre>{error.message}</pre>
+  </div>
+);
 
 const Index = () => {
   const [tweetContent, setTweetContent] = useState('');
 
-  const handleTweetChange = useCallback((newContent) => {
+  const handleTweetChange = useCallback(async (newContent) => {
     try {
+      await new Promise(resolve => setTimeout(resolve, 0)); // Simulate async operation
       setTweetContent(newContent);
     } catch (error) {
       console.error("Error updating tweet content:", error);
@@ -20,20 +29,22 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold text-center text-gray-900">
-          Twitter Preview Tool
-        </h1>
-        <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
-          <TweetInput value={tweetContent} onChange={handleTweetChange} />
-          <div className="border-t pt-6">
-            <h2 className="text-xl font-semibold mb-4">Preview</h2>
-            <TweetPreview content={tweetContent} />
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <h1 className="text-3xl font-bold text-center text-gray-900">
+            Twitter Preview Tool
+          </h1>
+          <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
+            <TweetInput value={tweetContent} onChange={handleTweetChange} />
+            <div className="border-t pt-6">
+              <h2 className="text-xl font-semibold mb-4">Preview</h2>
+              <TweetPreview content={tweetContent} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 };
 

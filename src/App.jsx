@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { navItems } from "./nav-items";
-import ErrorBoundary from "./components/ErrorBoundary";
+import { ErrorBoundary } from 'react-error-boundary';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,9 +15,16 @@ const queryClient = new QueryClient({
   },
 });
 
+const ErrorFallback = ({ error }) => (
+  <div role="alert">
+    <p>Something went wrong:</p>
+    <pre>{error.message}</pre>
+  </div>
+);
+
 const App = () => (
   <React.StrictMode>
-    <ErrorBoundary>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
